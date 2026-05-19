@@ -17,17 +17,17 @@ public class SchoolDaoImpl implements SchoolDao {
     }
 
     /*
-    * Add each SQL statement to the methods below.
-    * The SQL statement must be completely inside the quotation marks provided
-    * in the existing Java statement:
-    *   String sql = "";
-    *
-    * Special notes:
-    *   - Strings must be inside single quotation marks (' ').
-    *   - Strings are case-sensitive.
-    *   - Semi-colons are optional at the end of the SQL statement.
-    *
-    * Do not change any code outside of the placeholders provided.
+     * Add each SQL statement to the methods below.
+     * The SQL statement must be completely inside the quotation marks provided
+     * in the existing Java statement:
+     *   String sql = "";
+     *
+     * Special notes:
+     *   - Strings must be inside single quotation marks (' ').
+     *   - Strings are case-sensitive.
+     *   - Semi-colons are optional at the end of the SQL statement.
+     *
+     * Do not change any code outside of the placeholders provided.
      */
 
     @Override
@@ -36,7 +36,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // sorted by last name.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "SELECT fname, lname FROM student ORDER BY lname";
 
         // YOUR CODE ENDS HERE
 
@@ -49,7 +49,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // for all courses in the Computer Science department.
         // YOUR CODE STARTS HERE
 
-         String sql = "";
+        String sql = "SELECT courseCode, courseDesc FROM course JOIN teacher ON course.teacherId = teacher.tid WHERE teacher.dept = 'Computer Science'";
 
         // YOUR CODE ENDS HERE
         return jdbcTemplate.query(sql, new CourseMapper());
@@ -61,7 +61,7 @@ public class SchoolDaoImpl implements SchoolDao {
         //  Name the aggregate field `teacherCount`.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "SELECT dept, COUNT(*) AS teacherCount FROM teacher GROUP BY dept";
 
         // YOUR CODE ENDS HERE
         return jdbcTemplate.query(sql, new TeacherCountMapper());
@@ -74,7 +74,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // Name the aggregate field `numStudents`.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "SELECT c.courseCode, c.courseDesc, COUNT(cs.student_id) AS numStudents FROM course c LEFT JOIN course_student cs ON c.cid = cs.course_id GROUP BY c.cid, c.courseCode, c.courseDesc";
 
         // YOUR CODE ENDS HERE
         return jdbcTemplate.query(sql, new StudentCountMapper());
@@ -82,16 +82,16 @@ public class SchoolDaoImpl implements SchoolDao {
 
     // This step includes two parts. Both parts must be completed to pass the test.
     // Create a new student and enroll the new student in a course
-     @Override
+    @Override
     public void addStudent() {
         // Part 1: Write a query to add the student Robert Dylan to the student table.
         // Need to add in the sid for Robert Dylan.  Use sid: 123
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "INSERT INTO student (sid, fname, lname) VALUES (123, 'Robert', 'Dylan')";
 
         // YOUR CODE ENDS HERE
-         System.out.println(jdbcTemplate.update(sql));
+        System.out.println(jdbcTemplate.update(sql));
 
     }
 
@@ -101,7 +101,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // You will need to include a sid in your query.  Use 123
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "INSERT INTO course_student (student_id, course_id) VALUES (123, 1)";
 
         // YOUR CODE ENDS HERE
         jdbcTemplate.update(sql);
@@ -112,7 +112,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // Write a query to change the course description for course CS305 to "Advanced Python with Flask".
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "UPDATE course SET courseDesc = 'Advanced Python with Flask' WHERE courseCode = 'CS305'";
 
         // YOUR CODE ENDS HERE
         jdbcTemplate.update(sql);
@@ -123,7 +123,7 @@ public class SchoolDaoImpl implements SchoolDao {
         // Write a query to remove David Mitchell as a teacher.
         // YOUR CODE STARTS HERE
 
-        String sql = "";
+        String sql = "DELETE FROM teacher WHERE tFName = 'David' AND tLName = 'Mitchell'";
 
         // YOUR CODE ENDS HERE
         jdbcTemplate.update(sql);
